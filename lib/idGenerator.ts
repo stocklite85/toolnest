@@ -3,20 +3,20 @@ export type Separator = '' | '-' | '_'
 
 const pool: Record<Exclude<Style, 'any'>, { adj: string[]; noun: string[] }> = {
   cool: {
-    adj: ['shadow', 'dark', 'iron', 'neon', 'phantom', 'silent', 'rogue', 'apex', 'prime', 'ultra', 'ghost', 'frozen', 'electric', 'cosmic', 'void', 'crimson', 'stealth', 'brutal', 'savage', 'lone'],
-    noun: ['wolf', 'hawk', 'viper', 'cobra', 'titan', 'blade', 'storm', 'raven', 'phoenix', 'dragon', 'falcon', 'panther', 'thunder', 'nova', 'reaper', 'ranger', 'hunter', 'knight', 'sniper', 'rebel'],
+    adj: ['shadow', 'dark', 'iron', 'neon', 'phantom', 'silent', 'rogue', 'apex', 'prime', 'ultra', 'ghost', 'frozen', 'electric', 'cosmic', 'void', 'crimson', 'stealth', 'brutal', 'savage', 'lone', 'bold', 'grim', 'wild', 'cold', 'raw'],
+    noun: ['wolf', 'hawk', 'viper', 'cobra', 'titan', 'blade', 'storm', 'raven', 'phoenix', 'dragon', 'falcon', 'panther', 'thunder', 'nova', 'reaper', 'ranger', 'hunter', 'knight', 'sniper', 'rebel', 'fox', 'bear', 'crow', 'lynx', 'boar'],
   },
   cute: {
-    adj: ['fluffy', 'tiny', 'sweet', 'soft', 'fuzzy', 'happy', 'sunny', 'starry', 'sleepy', 'chubby', 'bubbly', 'sparkly', 'dreamy', 'pastel', 'rosy', 'bouncy', 'glowy', 'snuggly', 'cozy', 'chibi'],
-    noun: ['bunny', 'kitten', 'puppy', 'panda', 'bear', 'cloud', 'star', 'moon', 'pearl', 'cookie', 'mochi', 'daisy', 'peach', 'lemon', 'button', 'pudding', 'cupcake', 'boba', 'tulip', 'sprout'],
+    adj: ['fluffy', 'tiny', 'sweet', 'soft', 'fuzzy', 'happy', 'sunny', 'starry', 'sleepy', 'chubby', 'bubbly', 'sparkly', 'dreamy', 'pastel', 'rosy', 'bouncy', 'glowy', 'snuggly', 'cozy', 'chibi', 'mini', 'cute', 'puffy', 'dewy', 'silky'],
+    noun: ['bunny', 'kitten', 'puppy', 'panda', 'bear', 'cloud', 'star', 'moon', 'pearl', 'cookie', 'mochi', 'daisy', 'peach', 'lemon', 'button', 'pudding', 'cupcake', 'boba', 'tulip', 'sprout', 'cake', 'dew', 'puff', 'bean', 'pie'],
   },
   funny: {
-    adj: ['lazy', 'clumsy', 'grumpy', 'hangry', 'sassy', 'goofy', 'wacky', 'cranky', 'sneaky', 'cheeky', 'derpy', 'extra', 'salty', 'sus', 'feral', 'cursed', 'chaotic', 'spicy', 'crispy', 'soggy'],
-    noun: ['potato', 'noodle', 'pickle', 'muffin', 'nugget', 'taco', 'waffle', 'donut', 'burrito', 'dumpling', 'pretzel', 'bagel', 'tofu', 'pancake', 'churro', 'hotdog', 'biscuit', 'goblin', 'gremlin', 'raccoon'],
+    adj: ['lazy', 'clumsy', 'grumpy', 'hangry', 'sassy', 'goofy', 'wacky', 'cranky', 'sneaky', 'cheeky', 'derpy', 'extra', 'salty', 'sus', 'feral', 'cursed', 'chaotic', 'spicy', 'crispy', 'soggy', 'dumb', 'zany', 'odd', 'big', 'soft'],
+    noun: ['potato', 'noodle', 'pickle', 'muffin', 'nugget', 'taco', 'waffle', 'donut', 'burrito', 'dumpling', 'pretzel', 'bagel', 'tofu', 'pancake', 'churro', 'hotdog', 'biscuit', 'goblin', 'gremlin', 'raccoon', 'rat', 'blob', 'sock', 'egg', 'ham'],
   },
   tech: {
-    adj: ['cyber', 'binary', 'quantum', 'neural', 'crypto', 'digital', 'turbo', 'hyper', 'nano', 'pixel', 'vector', 'async', 'cached', 'runtime', 'kernel', 'sudo', 'headless', 'lambda', 'recursive', 'compiled'],
-    noun: ['nexus', 'matrix', 'node', 'proxy', 'kernel', 'stack', 'hash', 'bot', 'daemon', 'socket', 'token', 'cipher', 'buffer', 'payload', 'webhook', 'router', 'cluster', 'pipeline', 'runtime', 'api'],
+    adj: ['cyber', 'binary', 'quantum', 'neural', 'crypto', 'digital', 'turbo', 'hyper', 'nano', 'pixel', 'vector', 'async', 'cached', 'runtime', 'kernel', 'sudo', 'headless', 'lambda', 'recursive', 'compiled', 'null', 'root', 'raw', 'dry', 'hex'],
+    noun: ['nexus', 'matrix', 'node', 'proxy', 'kernel', 'stack', 'hash', 'bot', 'daemon', 'socket', 'token', 'cipher', 'buffer', 'payload', 'webhook', 'router', 'cluster', 'pipeline', 'runtime', 'api', 'cpu', 'ram', 'log', 'loop', 'byte'],
   },
 }
 

@@ -54,8 +54,11 @@ export default function IdGeneratorPage() {
       setCards(Array.from({ length: 30 }, () => ({ id: ++uid, value: generateUUID(), copied: false })))
       return
     }
-    // 길이 필터 적용 위해 넉넉하게 생성 후 필터링
-    const pool = generateUsernames({ name, hobbies, numbers, style, separator: useSep ? sep : '' }, 120)
+    // Short 선택 시 구분자 제거 + 숫자 제외, 후보 많이 생성
+    const effectiveSep = (lengthFilter === 'short') ? '' : (useSep ? sep : '')
+    const effectiveNumbers = (lengthFilter === 'short') ? '' : numbers
+    const batchSize = lengthFilter === 'short' ? 300 : 120
+    const pool = generateUsernames({ name, hobbies, numbers: effectiveNumbers, style, separator: effectiveSep }, batchSize)
     const filtered = filterByLength(pool, lengthFilter).slice(0, 30)
     setCards(filtered.map(v => ({ id: ++uid, value: v, copied: false })))
   }
