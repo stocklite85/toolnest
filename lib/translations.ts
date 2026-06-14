@@ -72,6 +72,22 @@ export const translations = {
       copy: 'Copy',
       copied: 'Copied!',
     },
+    base64: {
+      title: 'Base64 Encoder / Decoder',
+      description: 'Encode and decode Base64 strings instantly',
+    },
+    jsonFormatter: {
+      title: 'JSON Formatter',
+      description: 'Format, minify, and validate JSON instantly',
+    },
+    urlEncoder: {
+      title: 'URL Encoder / Decoder',
+      description: 'Encode and decode URLs and query strings',
+    },
+    colorConverter: {
+      title: 'Color Converter',
+      description: 'Convert colors between HEX, RGB, and HSL',
+    },
     common: {
       backHome: '← Back to Home',
       footerText: 'Free online utilities. No tracking, no ads (yet), no nonsense.',
@@ -149,6 +165,22 @@ export const translations = {
       error: '잘못된 IP 주소 또는 CIDR 표기입니다. 예: 192.168.1.0/24',
       copy: '복사',
       copied: '복사됨!',
+    },
+    base64: {
+      title: 'Base64 인코더 / 디코더',
+      description: 'Base64 문자열을 즉시 인코딩하거나 디코딩하세요',
+    },
+    jsonFormatter: {
+      title: 'JSON 포매터',
+      description: 'JSON을 보기 좋게 정렬하거나 압축하고 유효성을 검사하세요',
+    },
+    urlEncoder: {
+      title: 'URL 인코더 / 디코더',
+      description: 'URL과 쿼리 문자열을 인코딩하거나 디코딩하세요',
+    },
+    colorConverter: {
+      title: '색상 변환기',
+      description: 'HEX, RGB, HSL 색상 코드를 변환하세요',
     },
     common: {
       backHome: '← 홈으로',

@@ -28,6 +28,38 @@ const tools = [
     color: 'from-emerald-500/10 to-teal-500/10 hover:from-emerald-500/20 hover:to-teal-500/20 border-emerald-500/20 hover:border-emerald-500/50',
     iconBg: 'bg-emerald-500/20',
   },
+  {
+    href: '/base64',
+    icon: '🔢',
+    titleKey: 'base64.title',
+    descKey: 'base64.description',
+    color: 'from-orange-500/10 to-amber-500/10 hover:from-orange-500/20 hover:to-amber-500/20 border-orange-500/20 hover:border-orange-500/50',
+    iconBg: 'bg-orange-500/20',
+  },
+  {
+    href: '/json-formatter',
+    icon: '📋',
+    titleKey: 'jsonFormatter.title',
+    descKey: 'jsonFormatter.description',
+    color: 'from-yellow-500/10 to-lime-500/10 hover:from-yellow-500/20 hover:to-lime-500/20 border-yellow-500/20 hover:border-yellow-500/50',
+    iconBg: 'bg-yellow-500/20',
+  },
+  {
+    href: '/url-encoder',
+    icon: '🔗',
+    titleKey: 'urlEncoder.title',
+    descKey: 'urlEncoder.description',
+    color: 'from-rose-500/10 to-pink-500/10 hover:from-rose-500/20 hover:to-pink-500/20 border-rose-500/20 hover:border-rose-500/50',
+    iconBg: 'bg-rose-500/20',
+  },
+  {
+    href: '/color-converter',
+    icon: '🎨',
+    titleKey: 'colorConverter.title',
+    descKey: 'colorConverter.description',
+    color: 'from-violet-500/10 to-fuchsia-500/10 hover:from-violet-500/20 hover:to-fuchsia-500/20 border-violet-500/20 hover:border-violet-500/50',
+    iconBg: 'bg-violet-500/20',
+  },
 ]
 
 export default function Home() {

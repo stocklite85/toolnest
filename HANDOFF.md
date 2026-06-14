@@ -127,7 +127,10 @@ toolnest/
 ### 기능 추가 (선택)
 - [x] 모바일 하단 네비게이션 (`components/BottomNav.tsx`)
 - [x] OG Image (`app/opengraph-image.tsx`) — SNS 공유 시 1200×630 미리보기 이미지
-- [ ] 툴 추가: Base64 인코더, JSON 포매터, URL 인코더 등
+- [x] Base64 인코더/디코더 (`/base64`)
+- [x] JSON 포매터 (`/json-formatter`)
+- [x] URL 인코더/디코더 (`/url-encoder`)
+- [x] 색상 변환기 (`/color-converter`)
 
 ---
 
