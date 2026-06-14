@@ -51,7 +51,8 @@ toolnest/
 │   ├── Footer.tsx                       ✅ 완성 (Privacy Policy 링크 포함)
 │   ├── CopyButton.tsx                   ✅ 완성 (복사 후 2초 피드백)
 │   ├── PrivacyBadge.tsx                 ✅ 완성 (각 툴 페이지 상단 — 브라우저 처리 안내 배너)
-│   └── AdSlot.tsx                       ✅ 완성 (Google AdSense 광고 슬롯 컴포넌트)
+│   ├── AdSlot.tsx                       ✅ 완성 (Google AdSense 광고 슬롯 컴포넌트)
+│   └── BottomNav.tsx                    ✅ 완성 (모바일 하단 네비게이션, md 이상 숨김)
 ├── contexts/
 │   └── LangContext.tsx                  ✅ 완성 (브라우저 언어 자동 감지 + localStorage 저장)
 ├── lib/
@@ -124,9 +125,9 @@ toolnest/
   - 광고 슬롯 ID는 AdSense 대시보드 → 광고 → 광고 단위에서 생성
 
 ### 기능 추가 (선택)
-- [ ] 모바일 하단 네비게이션 메뉴
+- [x] 모바일 하단 네비게이션 (`components/BottomNav.tsx`)
+- [x] OG Image (`app/opengraph-image.tsx`) — SNS 공유 시 1200×630 미리보기 이미지
 - [ ] 툴 추가: Base64 인코더, JSON 포매터, URL 인코더 등
-- [ ] OG Image 설정 (`app/opengraph-image.tsx`)
 
 ---
 
