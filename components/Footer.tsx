@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-slate-800 mt-16">
       <div className="max-w-5xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-2 text-slate-500 text-sm">
-        <span>© 2025 ToolNest</span>
+        <span>© {new Date().getFullYear()} ToolNest</span>
         <span>{t(lang, 'common.footerText')}</span>
         <Link href="/privacy" className="hover:text-slate-300 transition-colors">
           {lang === 'ko' ? '개인정보 처리방침' : 'Privacy Policy'}
