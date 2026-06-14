@@ -14,9 +14,8 @@ const STYLES: { value: Style; label: string; labelKo: string }[] = [
 ]
 
 const SEPARATORS: { value: Separator; label: string }[] = [
-  { value: '',  label: 'none' },
-  { value: '-', label: 'dash' },
-  { value: '_', label: 'underscore' },
+  { value: '-', label: '- dash' },
+  { value: '_', label: '_ underscore' },
 ]
 
 interface Card { id: number; value: string; copied: boolean }
@@ -30,6 +29,7 @@ export default function IdGeneratorPage() {
   const [hobbies, setHobbies] = useState('')
   const [numbers, setNumbers] = useState('')
   const [style, setStyle]     = useState<Style>('any')
+  const [useSep, setUseSep]   = useState(true)
   const [sep, setSep]         = useState<Separator>('-')
   const [cards, setCards]     = useState<Card[]>([])
   const [mode, setMode]       = useState<'username' | 'uuid'>('username')
@@ -39,7 +39,7 @@ export default function IdGeneratorPage() {
       setCards(Array.from({ length: 30 }, () => ({ id: ++uid, value: generateUUID(), copied: false })))
       return
     }
-    const names = generateUsernames({ name, hobbies, numbers, style, separator: sep }, 30)
+    const names = generateUsernames({ name, hobbies, numbers, style, separator: useSep ? sep : '' }, 30)
     setCards(names.map(v => ({ id: ++uid, value: v, copied: false })))
   }
 
@@ -120,13 +120,19 @@ export default function IdGeneratorPage() {
               </div>
             </div>
             <div>
-              <label className="text-xs text-slate-500 uppercase tracking-wider mb-1.5 block">
-                {isKo ? '구분자' : 'Separator'}
-              </label>
-              <div className="flex gap-1.5">
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs text-slate-500 uppercase tracking-wider">
+                  {isKo ? '구분자' : 'Separator'}
+                </label>
+                <button onClick={() => setUseSep(p => !p)}
+                  className={`w-9 h-5 rounded-full transition-colors relative ${useSep ? 'bg-cyan-500' : 'bg-slate-700'}`}>
+                  <span className={`absolute top-[3px] w-[14px] h-[14px] bg-white rounded-full shadow transition-transform ${useSep ? 'translate-x-[19px]' : 'translate-x-[3px]'}`} />
+                </button>
+              </div>
+              <div className={`flex gap-1.5 transition-opacity ${useSep ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
                 {SEPARATORS.map(s => (
                   <button key={s.value} onClick={() => setSep(s.value)}
-                    className={`flex-1 py-1.5 rounded-lg text-xs font-mono border transition-all ${sep === s.value ? 'bg-slate-600 border-slate-500 text-white' : 'border-slate-700 text-slate-500 hover:border-slate-600 hover:text-slate-300'}`}>
+                    className={`flex-1 py-1.5 rounded-lg text-xs font-mono border transition-all ${sep === s.value && useSep ? 'bg-slate-600 border-slate-500 text-white' : 'border-slate-700 text-slate-500 hover:border-slate-600 hover:text-slate-300'}`}>
                     {s.label}
                   </button>
                 ))}
