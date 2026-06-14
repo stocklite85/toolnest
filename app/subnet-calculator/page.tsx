@@ -5,6 +5,7 @@ import { useLang } from '@/contexts/LangContext'
 import { t } from '@/lib/translations'
 import { calculateSubnet, parseCIDR, type SubnetInfo } from '@/lib/subnet'
 import CopyButton from '@/components/CopyButton'
+import PrivacyBadge from '@/components/PrivacyBadge'
 
 const EXAMPLES = ['192.168.1.0/24', '10.0.0.0/8', '172.16.0.0/12', '10.10.5.100/27']
 
@@ -54,6 +55,8 @@ export default function SubnetCalculatorPage() {
           <p className="text-slate-400 text-sm">{t(lang, 'subnet.description')}</p>
         </div>
       </div>
+
+      <PrivacyBadge />
 
       {/* Input */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-5">

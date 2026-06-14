@@ -5,6 +5,7 @@ import { useLang } from '@/contexts/LangContext'
 import { t } from '@/lib/translations'
 import { generatePassword, getStrength, type PasswordOptions } from '@/lib/password'
 import CopyButton from '@/components/CopyButton'
+import PrivacyBadge from '@/components/PrivacyBadge'
 
 export default function PasswordGeneratorPage() {
   const { lang } = useLang()
@@ -53,6 +54,8 @@ export default function PasswordGeneratorPage() {
           <p className="text-slate-400 text-sm">{t(lang, 'password.description')}</p>
         </div>
       </div>
+
+      <PrivacyBadge />
 
       {/* Options */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-5 space-y-5">

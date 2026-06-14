@@ -5,6 +5,7 @@ import { useLang } from '@/contexts/LangContext'
 import { t } from '@/lib/translations'
 import { generateIds, type IdType, type Separator } from '@/lib/idGenerator'
 import CopyButton from '@/components/CopyButton'
+import PrivacyBadge from '@/components/PrivacyBadge'
 
 export default function IdGeneratorPage() {
   const { lang } = useLang()
@@ -45,6 +46,8 @@ export default function IdGeneratorPage() {
           <p className="text-slate-400 text-sm">{t(lang, 'id.description')}</p>
         </div>
       </div>
+
+      <PrivacyBadge />
 
       {/* Options */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-5 space-y-5">
