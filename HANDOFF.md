@@ -43,8 +43,12 @@ toolnest/
 │       └── page.tsx                     ✅ 완성
 ├── components/
 │   ├── Header.tsx                       ✅ 완성 (네비 + 언어 토글 버튼)
-│   ├── Footer.tsx                       ✅ 완성
-│   └── CopyButton.tsx                   ✅ 완성 (복사 후 2초 피드백)
+│   ├── Footer.tsx                       ✅ 완성 (Privacy Policy 링크 포함)
+│   ├── CopyButton.tsx                   ✅ 완성 (복사 후 2초 피드백)
+│   └── PrivacyBadge.tsx                 ✅ 완성 (각 툴 페이지 상단 배너)
+├── app/privacy/
+│   ├── layout.tsx                       ✅ 완성 (SEO 메타데이터)
+│   └── page.tsx                         ✅ 완성 (개인정보 처리방침 전문)
 ├── contexts/
 │   └── LangContext.tsx                  ✅ 완성 (en/ko 전환 Context)
 ├── lib/
@@ -99,8 +103,8 @@ Header의 국기 버튼으로 토글. 페이지 이동해도 언어 유지됨 (C
 ## 아직 안 된 것 (다음 AI가 할 일)
 
 ### 즉시 필요
-- [ ] **GitHub push** — `git init` → `git add .` → `git commit` → GitHub 새 저장소 연결 → push
-- [ ] **Vercel 배포** — vercel.com에서 GitHub 저장소 import
+- [x] **GitHub push** — https://github.com/stocklite85/toolnest
+- [x] **Vercel 배포** — https://toolnest-inky.vercel.app
 
 ### 수익화 (배포 후)
 - [ ] **Google AdSense 신청** — 툴 페이지 상단/하단에 광고 슬롯 추가
