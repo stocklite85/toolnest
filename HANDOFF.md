@@ -50,7 +50,8 @@ toolnest/
 │   ├── Header.tsx                       ✅ 완성 (네비 + 언어 토글 버튼)
 │   ├── Footer.tsx                       ✅ 완성 (Privacy Policy 링크 포함)
 │   ├── CopyButton.tsx                   ✅ 완성 (복사 후 2초 피드백)
-│   └── PrivacyBadge.tsx                 ✅ 완성 (각 툴 페이지 상단 — 브라우저 처리 안내 배너)
+│   ├── PrivacyBadge.tsx                 ✅ 완성 (각 툴 페이지 상단 — 브라우저 처리 안내 배너)
+│   └── AdSlot.tsx                       ✅ 완성 (Google AdSense 광고 슬롯 컴포넌트)
 ├── contexts/
 │   └── LangContext.tsx                  ✅ 완성 (브라우저 언어 자동 감지 + localStorage 저장)
 ├── lib/
@@ -116,10 +117,11 @@ toolnest/
 
 ## 다음 AI가 할 일
 
-### 수익화 (가장 우선)
-- [ ] **Google AdSense 신청** — 트래픽 어느 정도 쌓인 후 신청 유리
-- [ ] 광고 컴포넌트 (`components/AdSlot.tsx`) 작성
-- [ ] `next/script`로 AdSense 스크립트 로드 (`app/layout.tsx`에 추가)
+### 수익화
+- [x] `components/AdSlot.tsx` 완성 (publisher ID: `ca-pub-5163207360443663`)
+- [x] `app/layout.tsx`에 AdSense 글로벌 스크립트 추가
+- [ ] **AdSense 심사 승인 대기** — 승인 후 각 페이지에 `<AdSlot slot="광고슬롯ID" />` 배치
+  - 광고 슬롯 ID는 AdSense 대시보드 → 광고 → 광고 단위에서 생성
 
 ### 기능 추가 (선택)
 - [ ] 모바일 하단 네비게이션 메뉴
