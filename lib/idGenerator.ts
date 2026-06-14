@@ -1,18 +1,24 @@
-const adjectives = [
-  'happy', 'swift', 'bright', 'calm', 'bold', 'cool', 'fast', 'deep',
-  'sharp', 'wild', 'keen', 'pure', 'warm', 'clear', 'brave', 'silent',
-  'golden', 'cosmic', 'electric', 'turbo', 'mega', 'hyper', 'ultra',
-  'super', 'neo', 'prime', 'apex', 'zen', 'iron', 'silver', 'neon',
-  'frozen', 'burning', 'flying', 'rising', 'dark', 'lucky', 'magic',
-]
+export type Style = 'cool' | 'cute' | 'funny' | 'tech'
+export type Separator = '-' | '_' | '.'
 
-const nouns = [
-  'tiger', 'panda', 'fox', 'wolf', 'eagle', 'hawk', 'bear', 'lion',
-  'shark', 'cobra', 'falcon', 'raven', 'dragon', 'phoenix', 'titan',
-  'viper', 'nexus', 'proxy', 'cipher', 'pixel', 'byte', 'node',
-  'spark', 'storm', 'flame', 'frost', 'blade', 'comet', 'nova', 'orbit',
-  'quasar', 'pulsar', 'vector', 'matrix', 'ranger', 'hunter', 'rider',
-]
+const words: Record<Style, { adj: string[]; noun: string[] }> = {
+  cool: {
+    adj: ['shadow', 'dark', 'iron', 'neon', 'phantom', 'silent', 'rogue', 'apex', 'prime', 'ultra', 'hyper', 'ghost', 'frozen', 'burning', 'electric', 'cosmic', 'solar', 'lunar', 'void', 'crimson'],
+    noun: ['wolf', 'hawk', 'viper', 'cobra', 'titan', 'blade', 'storm', 'raven', 'phoenix', 'dragon', 'falcon', 'panther', 'jaguar', 'thunder', 'nova', 'comet', 'reaper', 'ranger', 'hunter', 'legend'],
+  },
+  cute: {
+    adj: ['fluffy', 'tiny', 'sweet', 'soft', 'little', 'fuzzy', 'happy', 'sunny', 'starry', 'sleepy', 'chubby', 'bubbly', 'sparkly', 'dreamy', 'pastel', 'rosy', 'bouncy', 'glowy', 'snuggly', 'cozy'],
+    noun: ['bunny', 'kitten', 'puppy', 'panda', 'bear', 'cloud', 'star', 'moon', 'pearl', 'cookie', 'mochi', 'daisy', 'peach', 'lemon', 'melon', 'button', 'pudding', 'cupcake', 'boba', 'tulip'],
+  },
+  funny: {
+    adj: ['lazy', 'clumsy', 'grumpy', 'hangry', 'sassy', 'goofy', 'zany', 'wacky', 'cranky', 'sneaky', 'cheeky', 'derpy', 'extra', 'salty', 'sus', 'unhinged', 'feral', 'cursed', 'chaotic', 'spicy'],
+    noun: ['potato', 'noodle', 'pickle', 'muffin', 'nugget', 'taco', 'biscuit', 'waffle', 'donut', 'burrito', 'dumpling', 'pretzel', 'bagel', 'tofu', 'nachos', 'pancake', 'churro', 'lasagna', 'hotdog', 'spaghetti'],
+  },
+  tech: {
+    adj: ['cyber', 'binary', 'quantum', 'neural', 'crypto', 'digital', 'turbo', 'hyper', 'meta', 'nano', 'ultra', 'pixel', 'vector', 'async', 'cached', 'compiled', 'runtime', 'kernel', 'sudo', 'headless'],
+    noun: ['nexus', 'matrix', 'node', 'proxy', 'kernel', 'stack', 'hash', 'loop', 'bot', 'daemon', 'socket', 'token', 'cipher', 'buffer', 'bitwise', 'payload', 'webhook', 'router', 'cluster', 'pipeline'],
+  },
+}
 
 function randomItem<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -20,13 +26,6 @@ function randomItem<T>(arr: T[]): T {
 
 function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
-}
-
-function randomAlphanumeric(length: number): string {
-  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
-  const arr = new Uint32Array(length)
-  crypto.getRandomValues(arr)
-  return Array.from(arr).map(n => chars[n % chars.length]).join('')
 }
 
 function generateUUID(): string {
@@ -43,36 +42,23 @@ function generateUUID(): string {
   ].join('-')
 }
 
-export type IdType = 'wordcombo' | 'alphanumeric' | 'uuid'
-export type Separator = '-' | '_' | '.'
-
 export interface IdOptions {
-  type: IdType
+  style: Style
   separator: Separator
   includeNumber: boolean
-  count: number
 }
 
-export function generateId(opts: IdOptions): string {
+export function generateUsername(opts: IdOptions): string {
+  const { adj, noun } = words[opts.style]
   const sep = opts.separator
-
-  switch (opts.type) {
-    case 'wordcombo': {
-      const adj = randomItem(adjectives)
-      const noun = randomItem(nouns)
-      const num = opts.includeNumber ? `${sep}${randomInt(10, 9999)}` : ''
-      return `${adj}${sep}${noun}${num}`
-    }
-    case 'alphanumeric': {
-      const base = randomAlphanumeric(10)
-      const num = opts.includeNumber ? `${sep}${randomInt(100, 999)}` : ''
-      return `${base}${num}`
-    }
-    case 'uuid':
-      return generateUUID()
-  }
+  const num = opts.includeNumber ? `${sep}${randomInt(10, 999)}` : ''
+  return `${randomItem(adj)}${sep}${randomItem(noun)}${num}`
 }
 
-export function generateIds(opts: IdOptions): string[] {
-  return Array.from({ length: opts.count }, () => generateId(opts))
+export function generateUsernames(opts: IdOptions, count: number): string[] {
+  return Array.from({ length: count }, () => generateUsername(opts))
+}
+
+export function generateUUIDs(count: number): string[] {
+  return Array.from({ length: count }, () => generateUUID())
 }

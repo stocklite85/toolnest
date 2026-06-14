@@ -1,148 +1,187 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/contexts/LangContext'
-import { t } from '@/lib/translations'
-import { generateIds, type IdType, type Separator } from '@/lib/idGenerator'
-import CopyButton from '@/components/CopyButton'
+import { generateUsername, generateUUIDs, type Style, type Separator } from '@/lib/idGenerator'
 import PrivacyBadge from '@/components/PrivacyBadge'
+
+const STYLES: { value: Style; label: string; labelKo: string; emoji: string; color: string; activeColor: string }[] = [
+  { value: 'cool', label: 'Cool', labelKo: '쿨', emoji: '🔥', color: 'border-slate-700 text-slate-400 hover:border-orange-500/50 hover:text-orange-400', activeColor: 'border-orange-500 bg-orange-500/10 text-orange-400' },
+  { value: 'cute', label: 'Cute', labelKo: '귀여운', emoji: '🌸', color: 'border-slate-700 text-slate-400 hover:border-pink-500/50 hover:text-pink-400', activeColor: 'border-pink-500 bg-pink-500/10 text-pink-400' },
+  { value: 'funny', label: 'Funny', labelKo: '웃긴', emoji: '😂', color: 'border-slate-700 text-slate-400 hover:border-yellow-500/50 hover:text-yellow-400', activeColor: 'border-yellow-500 bg-yellow-500/10 text-yellow-400' },
+  { value: 'tech', label: 'Tech', labelKo: '테크', emoji: '💻', color: 'border-slate-700 text-slate-400 hover:border-cyan-500/50 hover:text-cyan-400', activeColor: 'border-cyan-500 bg-cyan-500/10 text-cyan-400' },
+]
+
+const SEPARATORS: { value: Separator; label: string }[] = [
+  { value: '-', label: 'dash  cool-wolf' },
+  { value: '_', label: 'underscore  cool_wolf' },
+  { value: '.', label: 'dot  cool.wolf' },
+]
+
+const UUID_COUNT = 8
+
+interface UsernameCard {
+  id: number
+  value: string
+  copied: boolean
+}
+
+let cardId = 0
 
 export default function IdGeneratorPage() {
   const { lang } = useLang()
-  const [type, setType] = useState<IdType>('wordcombo')
+  const isKo = lang === 'ko'
+
+  const [style, setStyle] = useState<Style>('cool')
   const [separator, setSeparator] = useState<Separator>('-')
-  const [includeNumber, setIncludeNumber] = useState(true)
-  const [count, setCount] = useState(5)
-  const [ids, setIds] = useState<string[]>([])
+  const [includeNumber, setIncludeNumber] = useState(false)
+  const [showUUID, setShowUUID] = useState(false)
+  const [cards, setCards] = useState<UsernameCard[]>([])
 
-  const generate = useCallback(() => {
-    setIds(generateIds({ type, separator, includeNumber, count }))
-  }, [type, separator, includeNumber, count])
+  const makeCards = useCallback((s: Style, sep: Separator, num: boolean) => {
+    return Array.from({ length: 12 }, () => ({
+      id: ++cardId,
+      value: generateUsername({ style: s, separator: sep, includeNumber: num }),
+      copied: false,
+    }))
+  }, [])
 
-  const allText = ids.join('\n')
+  const makeUUIDs = useCallback(() => {
+    return generateUUIDs(UUID_COUNT).map(v => ({ id: ++cardId, value: v, copied: false }))
+  }, [])
 
-  const types: { value: IdType; labelKey: string }[] = [
-    { value: 'wordcombo', labelKey: 'id.wordCombo' },
-    { value: 'alphanumeric', labelKey: 'id.alphanumeric' },
-    { value: 'uuid', labelKey: 'id.uuid' },
-  ]
+  useEffect(() => {
+    setCards(makeCards(style, separator, includeNumber))
+  }, [])
 
-  const separators: { value: Separator; labelKey: string }[] = [
-    { value: '-', labelKey: 'id.dash' },
-    { value: '_', labelKey: 'id.underscore' },
-    { value: '.', labelKey: 'id.dot' },
-  ]
+  const generate = () => {
+    if (showUUID) setCards(makeUUIDs())
+    else setCards(makeCards(style, separator, includeNumber))
+  }
+
+  const refreshOne = (targetId: number) => {
+    setCards(prev => prev.map(c =>
+      c.id === targetId
+        ? { id: ++cardId, value: showUUID ? generateUUIDs(1)[0] : generateUsername({ style, separator, includeNumber }), copied: false }
+        : c
+    ))
+  }
+
+  const copyOne = async (targetId: number, value: string) => {
+    await navigator.clipboard.writeText(value)
+    setCards(prev => prev.map(c => c.id === targetId ? { ...c, copied: true } : c))
+    setTimeout(() => setCards(prev => prev.map(c => c.id === targetId ? { ...c, copied: false } : c)), 2000)
+  }
+
+  const activeStyle = STYLES.find(s => s.value === style)!
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
+    <div className="max-w-4xl mx-auto px-4 py-10">
       <Link href="/" className="text-slate-500 hover:text-cyan-400 text-sm transition-colors">
-        {t(lang, 'common.backHome')}
+        {isKo ? '← 홈으로' : '← Back to Home'}
       </Link>
 
-      <div className="flex items-center gap-3 mt-6 mb-8">
-        <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center text-xl">🎲</div>
-        <div>
-          <h1 className="text-2xl font-bold">{t(lang, 'id.title')}</h1>
-          <p className="text-slate-400 text-sm">{t(lang, 'id.description')}</p>
-        </div>
+      <div className="mt-6 mb-2">
+        <h1 className="text-3xl font-bold">{isKo ? '아이디 생성기' : 'Username Generator'}</h1>
+        <p className="text-slate-400 mt-1">{isKo ? '마음에 드는 아이디를 바로 복사하세요' : 'Find the perfect username and copy it instantly'}</p>
       </div>
 
-      <PrivacyBadge />
+      <div className="mt-6 mb-6">
+        <PrivacyBadge />
+      </div>
 
-      {/* Options */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-5 space-y-5">
-        {/* Type */}
-        <div>
-          <label className="text-sm text-slate-400 mb-2 block">{t(lang, 'id.type')}</label>
-          <div className="flex gap-2">
-            {types.map(({ value, labelKey }) => (
-              <button key={value} onClick={() => setType(value)}
-                className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  type === value
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                }`}
-              >{t(lang, labelKey)}</button>
-            ))}
-          </div>
-        </div>
+      {/* Mode toggle */}
+      <div className="flex gap-2 mb-6">
+        <button onClick={() => { setShowUUID(false); setCards(makeCards(style, separator, includeNumber)) }}
+          className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${!showUUID ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400' : 'border-slate-700 text-slate-400 hover:border-slate-600'}`}>
+          {isKo ? '사용자명' : 'Username'}
+        </button>
+        <button onClick={() => { setShowUUID(true); setCards(makeUUIDs()) }}
+          className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${showUUID ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400' : 'border-slate-700 text-slate-400 hover:border-slate-600'}`}>
+          UUID v4
+        </button>
+      </div>
 
-        {/* Separator (only for non-UUID) */}
-        {type !== 'uuid' && (
+      {!showUUID && (
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-6 space-y-5">
+          {/* Style */}
           <div>
-            <label className="text-sm text-slate-400 mb-2 block">{t(lang, 'id.separator')}</label>
-            <div className="flex gap-2">
-              {separators.map(({ value, labelKey }) => (
-                <button key={value} onClick={() => setSeparator(value)}
-                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    separator === value
-                      ? 'bg-slate-600 text-white'
-                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                  }`}
-                >{t(lang, labelKey)}</button>
+            <p className="text-xs text-slate-500 uppercase tracking-widest mb-3">{isKo ? '스타일' : 'Style'}</p>
+            <div className="grid grid-cols-4 gap-2">
+              {STYLES.map(s => (
+                <button key={s.value}
+                  onClick={() => { setStyle(s.value); setCards(makeCards(s.value, separator, includeNumber)) }}
+                  className={`py-2.5 rounded-xl text-sm font-medium border transition-all ${style === s.value ? s.activeColor : s.color}`}>
+                  <span className="block text-lg mb-0.5">{s.emoji}</span>
+                  {isKo ? s.labelKo : s.label}
+                </button>
               ))}
             </div>
           </div>
-        )}
 
-        {/* Include number toggle */}
-        {type !== 'uuid' && (
+          {/* Separator */}
+          <div>
+            <p className="text-xs text-slate-500 uppercase tracking-widest mb-3">{isKo ? '구분자' : 'Separator'}</p>
+            <div className="flex gap-2">
+              {SEPARATORS.map(sep => (
+                <button key={sep.value}
+                  onClick={() => { setSeparator(sep.value); setCards(makeCards(style, sep.value, includeNumber)) }}
+                  className={`flex-1 py-2 rounded-xl text-xs font-mono border transition-all ${separator === sep.value ? 'bg-slate-700 border-slate-500 text-white' : 'border-slate-700 text-slate-500 hover:border-slate-600'}`}>
+                  {sep.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Include number */}
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-300">{t(lang, 'id.includeNumber')}</span>
+            <span className="text-sm text-slate-300">{isKo ? '숫자 포함' : 'Include numbers'}</span>
             <button
-              onClick={() => setIncludeNumber(p => !p)}
-              className={`w-11 h-6 rounded-full transition-colors relative ${
-                includeNumber ? 'bg-cyan-500' : 'bg-slate-700'
-              }`}
-            >
-              <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                includeNumber ? 'translate-x-[22px]' : 'translate-x-[2px]'
-              }`} />
+              onClick={() => { const next = !includeNumber; setIncludeNumber(next); setCards(makeCards(style, separator, next)) }}
+              className={`w-11 h-6 rounded-full transition-colors relative ${includeNumber ? 'bg-cyan-500' : 'bg-slate-700'}`}>
+              <span className={`absolute top-[3px] w-[18px] h-[18px] bg-white rounded-full shadow transition-transform ${includeNumber ? 'translate-x-[23px]' : 'translate-x-[3px]'}`} />
             </button>
           </div>
-        )}
-
-        {/* Count */}
-        <div className="flex items-center justify-between">
-          <label className="text-sm text-slate-300">{t(lang, 'id.count')}</label>
-          <div className="flex items-center gap-2">
-            {[1, 3, 5, 10].map(n => (
-              <button key={n} onClick={() => setCount(n)}
-                className={`w-9 h-8 rounded-lg text-sm font-medium transition-colors ${
-                  count === n ? 'bg-cyan-500 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                }`}
-              >{n}</button>
-            ))}
-          </div>
         </div>
-      </div>
+      )}
 
-      {/* Generate */}
-      <button
-        onClick={generate}
-        className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 text-white font-semibold transition-colors mb-5"
-      >
-        {t(lang, 'id.generate')}
+      {/* Generate button */}
+      <button onClick={generate}
+        className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 active:bg-cyan-600 text-white font-bold text-base transition-colors mb-8">
+        {isKo ? '🎲 새로 생성' : '🎲 Generate New'}
       </button>
 
-      {/* Results */}
-      {ids.length > 0 && (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-          <div className="divide-y divide-slate-800/60">
-            {ids.map((id, i) => (
-              <div key={i} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800/30">
-                <span className="w-5 text-xs text-slate-600 shrink-0">{i + 1}</span>
-                <span className="flex-1 font-mono text-sm text-slate-200 break-all">{id}</span>
-                <CopyButton text={id} label={t(lang, 'id.copy')} copiedLabel={t(lang, 'id.copied')} />
+      {/* Cards grid */}
+      {cards.length > 0 && (
+        <>
+          <p className="text-xs text-slate-600 mb-3 uppercase tracking-widest">
+            {showUUID ? 'UUID v4' : (isKo ? `${activeStyle.emoji} ${activeStyle.labelKo} 스타일` : `${activeStyle.emoji} ${activeStyle.label} Style`)}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {cards.map(card => (
+              <div key={card.id}
+                className="group bg-slate-900 border border-slate-800 hover:border-slate-600 rounded-2xl px-4 py-4 flex items-center justify-between gap-2 transition-all">
+                <span className={`font-mono text-sm font-medium truncate ${showUUID ? 'text-xs text-slate-400' : 'text-white'}`}>
+                  {card.value}
+                </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {/* Refresh single */}
+                  <button onClick={() => refreshOne(card.id)}
+                    className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-500 hover:text-slate-300 flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    </svg>
+                  </button>
+                  {/* Copy */}
+                  <button onClick={() => copyOne(card.id, card.value)}
+                    className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all ${card.copied ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-slate-800 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-400 border border-slate-700 hover:border-cyan-500/50'}`}>
+                    {card.copied ? (isKo ? '복사됨' : 'Copied!') : (isKo ? '복사' : 'Copy')}
+                  </button>
+                </div>
               </div>
             ))}
           </div>
-          {ids.length > 1 && (
-            <div className="px-5 py-3 border-t border-slate-800 flex justify-end">
-              <CopyButton text={allText} label={t(lang, 'id.copyAll')} copiedLabel={t(lang, 'id.copied')} />
-            </div>
-          )}
-        </div>
+        </>
       )}
     </div>
   )
