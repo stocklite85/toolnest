@@ -7,7 +7,7 @@
 
 **GitHub:** https://github.com/stocklite85/toolnest
 **배포 URL:** https://toolnest-inky.vercel.app
-**배포 방식:** Vercel 무료 플랜 — GitHub push 시 자동 재배포
+**배포 방식:** Vercel 무료 플랜 — `git push` 시 자동 재배포 (가끔 실패 시 `vercel --prod` 직접 실행)
 
 ---
 
@@ -39,7 +39,7 @@ toolnest/
 │   │   └── page.tsx                     ✅ 완성
 │   ├── id-generator/
 │   │   ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
-│   │   └── page.tsx                     ✅ 완성
+│   │   └── page.tsx                     ✅ 완성 (Spinxo 스타일)
 │   ├── subnet-calculator/
 │   │   ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
 │   │   └── page.tsx                     ✅ 완성
@@ -56,7 +56,7 @@ toolnest/
 ├── lib/
 │   ├── translations.ts                  ✅ 완성 (한/영 전체 번역 텍스트)
 │   ├── password.ts                      ✅ 완성 (생성 로직 + 강도 측정)
-│   ├── idGenerator.ts                   ✅ 완성 (wordcombo/alphanumeric/uuid)
+│   ├── idGenerator.ts                   ✅ 완성 (스타일별 단어풀 + 길이 필터 + UUID)
 │   └── subnet.ts                        ✅ 완성 (CIDR 파싱 + 전체 계산)
 ├── next.config.ts                       ✅ 기본값 유지 (standalone 넣지 말 것)
 └── HANDOFF.md                           ← 이 파일
@@ -74,13 +74,15 @@ toolnest/
 - 각 비밀번호 개별 복사 + 전체 복사
 - `crypto.getRandomValues()` 사용 (보안 난수)
 
-### 2. 아이디 생성기 (`/id-generator`)
-- 타입: Word Combo (형용사+명사) / Alphanumeric / UUID v4
-- 구분자: `-` / `_` / `.`
-- 숫자 포함 토글 (UUID 타입에선 비활성화)
-- 개수 선택 (1 / 3 / 5 / 10)
-- 각 항목 개별 복사 + 전체 복사
-- UUID: RFC 4122 v4 스펙 준수
+### 2. 아이디 생성기 (`/id-generator`) — Spinxo 스타일
+- **사용자 입력:** 이름/닉네임, 관심사/취미, 좋아하는 숫자
+- **스타일:** Any / Cool / Cute / Funny / Tech
+- **길이 필터:** 전체 / 짧게(≤8) / 보통(9~13) / 길게(14+)
+  - Short 모드: 4자 이하 단어만 사용, 숫자 제외, 500개 후보 생성 후 필터
+- **구분자 없음** (사용자 요청으로 제거)
+- 30개 카드 그리드, 클릭하면 바로 복사
+- UUID v4 탭 별도 제공
+- `lib/idGenerator.ts`: `GenOptions { name, hobbies, numbers, style, shortOnly }` 인터페이스
 
 ### 3. 서브넷 계산기 (`/subnet-calculator`)
 - 입력: `192.168.1.0/24` 형식 (CIDR 표기)
@@ -115,7 +117,7 @@ toolnest/
 ## 다음 AI가 할 일
 
 ### 수익화 (가장 우선)
-- [ ] **Google AdSense 신청** — 사이트 트래픽 어느정도 쌓인 후 신청 유리
+- [ ] **Google AdSense 신청** — 트래픽 어느 정도 쌓인 후 신청 유리
 - [ ] 광고 컴포넌트 (`components/AdSlot.tsx`) 작성
 - [ ] `next/script`로 AdSense 스크립트 로드 (`app/layout.tsx`에 추가)
 
@@ -132,6 +134,7 @@ toolnest/
 - 모든 페이지 `'use client'` — `crypto.getRandomValues()` 는 브라우저 전용
 - `next.config.ts` 에 `output: 'standalone'` 넣지 말 것 (Vercel과 충돌)
 - 로컬 dev 서버 실행 금지 (사용자 요청) — git push 후 Vercel에서 확인
+- **Vercel 자동배포가 가끔 미작동** → `vercel --prod` 명령어로 직접 배포 (Vercel CLI 설치됨)
 
 ---
 
@@ -142,5 +145,6 @@ cd d:\code\1_pro\toolnest
 git add .
 git commit -m "feat: 변경 내용"
 git push
-# → Vercel 자동 재배포 (1~2분 소요)
+# 자동배포 안 될 경우:
+vercel --prod
 ```
