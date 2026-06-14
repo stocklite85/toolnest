@@ -1,34 +1,105 @@
-export type Style = 'cool' | 'cute' | 'funny' | 'tech'
-export type Separator = '-' | '_' | '.'
+export type Style = 'any' | 'cool' | 'cute' | 'funny' | 'tech'
+export type Separator = '' | '-' | '_'
 
-const words: Record<Style, { adj: string[]; noun: string[] }> = {
+const pool: Record<Exclude<Style, 'any'>, { adj: string[]; noun: string[] }> = {
   cool: {
-    adj: ['shadow', 'dark', 'iron', 'neon', 'phantom', 'silent', 'rogue', 'apex', 'prime', 'ultra', 'hyper', 'ghost', 'frozen', 'burning', 'electric', 'cosmic', 'solar', 'lunar', 'void', 'crimson'],
-    noun: ['wolf', 'hawk', 'viper', 'cobra', 'titan', 'blade', 'storm', 'raven', 'phoenix', 'dragon', 'falcon', 'panther', 'jaguar', 'thunder', 'nova', 'comet', 'reaper', 'ranger', 'hunter', 'legend'],
+    adj: ['shadow', 'dark', 'iron', 'neon', 'phantom', 'silent', 'rogue', 'apex', 'prime', 'ultra', 'ghost', 'frozen', 'electric', 'cosmic', 'void', 'crimson', 'stealth', 'brutal', 'savage', 'lone'],
+    noun: ['wolf', 'hawk', 'viper', 'cobra', 'titan', 'blade', 'storm', 'raven', 'phoenix', 'dragon', 'falcon', 'panther', 'thunder', 'nova', 'reaper', 'ranger', 'hunter', 'knight', 'sniper', 'rebel'],
   },
   cute: {
-    adj: ['fluffy', 'tiny', 'sweet', 'soft', 'little', 'fuzzy', 'happy', 'sunny', 'starry', 'sleepy', 'chubby', 'bubbly', 'sparkly', 'dreamy', 'pastel', 'rosy', 'bouncy', 'glowy', 'snuggly', 'cozy'],
-    noun: ['bunny', 'kitten', 'puppy', 'panda', 'bear', 'cloud', 'star', 'moon', 'pearl', 'cookie', 'mochi', 'daisy', 'peach', 'lemon', 'melon', 'button', 'pudding', 'cupcake', 'boba', 'tulip'],
+    adj: ['fluffy', 'tiny', 'sweet', 'soft', 'fuzzy', 'happy', 'sunny', 'starry', 'sleepy', 'chubby', 'bubbly', 'sparkly', 'dreamy', 'pastel', 'rosy', 'bouncy', 'glowy', 'snuggly', 'cozy', 'chibi'],
+    noun: ['bunny', 'kitten', 'puppy', 'panda', 'bear', 'cloud', 'star', 'moon', 'pearl', 'cookie', 'mochi', 'daisy', 'peach', 'lemon', 'button', 'pudding', 'cupcake', 'boba', 'tulip', 'sprout'],
   },
   funny: {
-    adj: ['lazy', 'clumsy', 'grumpy', 'hangry', 'sassy', 'goofy', 'zany', 'wacky', 'cranky', 'sneaky', 'cheeky', 'derpy', 'extra', 'salty', 'sus', 'unhinged', 'feral', 'cursed', 'chaotic', 'spicy'],
-    noun: ['potato', 'noodle', 'pickle', 'muffin', 'nugget', 'taco', 'biscuit', 'waffle', 'donut', 'burrito', 'dumpling', 'pretzel', 'bagel', 'tofu', 'nachos', 'pancake', 'churro', 'lasagna', 'hotdog', 'spaghetti'],
+    adj: ['lazy', 'clumsy', 'grumpy', 'hangry', 'sassy', 'goofy', 'wacky', 'cranky', 'sneaky', 'cheeky', 'derpy', 'extra', 'salty', 'sus', 'feral', 'cursed', 'chaotic', 'spicy', 'crispy', 'soggy'],
+    noun: ['potato', 'noodle', 'pickle', 'muffin', 'nugget', 'taco', 'waffle', 'donut', 'burrito', 'dumpling', 'pretzel', 'bagel', 'tofu', 'pancake', 'churro', 'hotdog', 'biscuit', 'goblin', 'gremlin', 'raccoon'],
   },
   tech: {
-    adj: ['cyber', 'binary', 'quantum', 'neural', 'crypto', 'digital', 'turbo', 'hyper', 'meta', 'nano', 'ultra', 'pixel', 'vector', 'async', 'cached', 'compiled', 'runtime', 'kernel', 'sudo', 'headless'],
-    noun: ['nexus', 'matrix', 'node', 'proxy', 'kernel', 'stack', 'hash', 'loop', 'bot', 'daemon', 'socket', 'token', 'cipher', 'buffer', 'bitwise', 'payload', 'webhook', 'router', 'cluster', 'pipeline'],
+    adj: ['cyber', 'binary', 'quantum', 'neural', 'crypto', 'digital', 'turbo', 'hyper', 'nano', 'pixel', 'vector', 'async', 'cached', 'runtime', 'kernel', 'sudo', 'headless', 'lambda', 'recursive', 'compiled'],
+    noun: ['nexus', 'matrix', 'node', 'proxy', 'kernel', 'stack', 'hash', 'bot', 'daemon', 'socket', 'token', 'cipher', 'buffer', 'payload', 'webhook', 'router', 'cluster', 'pipeline', 'runtime', 'api'],
   },
 }
 
-function randomItem<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)]
+function rand<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)] }
+function randInt(min: number, max: number) { return Math.floor(Math.random() * (max - min + 1)) + min }
+
+function pickStyle(style: Style): Exclude<Style, 'any'> {
+  if (style !== 'any') return style
+  const styles: Exclude<Style, 'any'>[] = ['cool', 'cute', 'funny', 'tech']
+  return rand(styles)
 }
 
-function randomInt(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min
+export interface GenOptions {
+  name: string
+  hobbies: string
+  numbers: string
+  style: Style
+  separator: Separator
 }
 
-function generateUUID(): string {
+function cleanWord(s: string): string {
+  return s.trim().toLowerCase().replace(/\s+/g, '')
+}
+
+function getNumbers(numbers: string): string[] {
+  const cleaned = numbers.trim()
+  if (!cleaned) return ['', `${randInt(1, 99)}`, `${randInt(100, 999)}`, `${randInt(10, 99)}`]
+  const explicit = cleaned.replace(/[^0-9,\s]/g, '').split(/[,\s]+/).filter(Boolean)
+  return explicit.length ? explicit : [`${randInt(1, 99)}`]
+}
+
+function getHobbyWords(hobbies: string): string[] {
+  return hobbies.split(/[,\s]+/).map(cleanWord).filter(w => w.length >= 2).slice(0, 5)
+}
+
+export function generateUsernames(opts: GenOptions, count: number): string[] {
+  const { name, hobbies, numbers, style, separator } = opts
+  const sep = separator
+  const nameWord = cleanWord(name)
+  const hobbyWords = getHobbyWords(hobbies)
+  const nums = getNumbers(numbers)
+  const results = new Set<string>()
+
+  const add = (parts: (string | undefined)[], num = '') => {
+    const joined = parts.filter(Boolean).join(sep) + num
+    if (joined.length >= 3) results.add(joined)
+  }
+
+  let attempts = 0
+  while (results.size < count && attempts < count * 10) {
+    attempts++
+    const s = pickStyle(style)
+    const { adj, noun } = pool[s]
+    const a = rand(adj)
+    const n = rand(noun)
+    const num = rand(nums) ? `${sep}${rand(nums)}` : ''
+    const hobby = hobbyWords.length ? rand(hobbyWords) : ''
+
+    // Generation patterns
+    const pattern = randInt(0, nameWord ? 7 : 4)
+    switch (pattern) {
+      case 0: add([a, n], num); break
+      case 1: add([a, n]); break
+      case 2: add([a, n], `${sep}${randInt(1, 999)}`); break
+      case 3: add([n, a], num); break
+      case 4: add([a, n, `${randInt(10, 99)}`]); break
+      case 5: add([nameWord, n], num); break
+      case 6: add([a, nameWord], num); break
+      case 7: add([nameWord, hobby || n], num); break
+    }
+
+    if (hobby) {
+      const p2 = randInt(0, 2)
+      if (p2 === 0) add([hobby, n], num)
+      else if (p2 === 1) add([a, hobby], num)
+      else add([nameWord || a, hobby], num)
+    }
+  }
+
+  return Array.from(results).slice(0, count)
+}
+
+export function generateUUID(): string {
   const arr = new Uint8Array(16)
   crypto.getRandomValues(arr)
   arr[6] = (arr[6] & 0x0f) | 0x40
@@ -40,25 +111,4 @@ function generateUUID(): string {
     [...arr.slice(8, 10)].map(b => b.toString(16).padStart(2, '0')).join(''),
     [...arr.slice(10)].map(b => b.toString(16).padStart(2, '0')).join(''),
   ].join('-')
-}
-
-export interface IdOptions {
-  style: Style
-  separator: Separator
-  includeNumber: boolean
-}
-
-export function generateUsername(opts: IdOptions): string {
-  const { adj, noun } = words[opts.style]
-  const sep = opts.separator
-  const num = opts.includeNumber ? `${sep}${randomInt(10, 999)}` : ''
-  return `${randomItem(adj)}${sep}${randomItem(noun)}${num}`
-}
-
-export function generateUsernames(opts: IdOptions, count: number): string[] {
-  return Array.from({ length: count }, () => generateUsername(opts))
-}
-
-export function generateUUIDs(count: number): string[] {
-  return Array.from({ length: count }, () => generateUUID())
 }
