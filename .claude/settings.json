@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "Write-Output '{\"systemMessage\": \"HANDOFF.md 업데이트했나요? (Did you update HANDOFF.md?)\"}'",
+            "shell": "powershell"
+          }
+        ]
+      }
+    ]
+  }
+}
