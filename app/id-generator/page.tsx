@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/contexts/LangContext'
-import { generateUsernames, generateUUID, type Style, type Separator } from '@/lib/idGenerator'
+import { generateUsernames, generateUUID, type Style } from '@/lib/idGenerator'
 import PrivacyBadge from '@/components/PrivacyBadge'
 
 const STYLES: { value: Style; label: string; labelKo: string }[] = [
@@ -13,20 +13,16 @@ const STYLES: { value: Style; label: string; labelKo: string }[] = [
   { value: 'tech',  label: 'Tech',  labelKo: '테크' },
 ]
 
-const SEPARATORS: { value: Separator; label: string }[] = [
-  { value: '-', label: '- dash' },
-  { value: '_', label: '_ underscore' },
-]
-
 type LengthFilter = 'any' | 'short' | 'medium' | 'long'
 const LENGTHS: { value: LengthFilter; label: string; labelKo: string; hint: string }[] = [
-  { value: 'any',    label: 'Any',    labelKo: '전체',   hint: '' },
-  { value: 'short',  label: 'Short',  labelKo: '짧게',   hint: '≤8' },
-  { value: 'medium', label: 'Medium', labelKo: '보통',   hint: '9-13' },
-  { value: 'long',   label: 'Long',   labelKo: '길게',   hint: '14+' },
+  { value: 'any',    label: 'Any',    labelKo: '전체', hint: '' },
+  { value: 'short',  label: 'Short',  labelKo: '짧게', hint: '≤8' },
+  { value: 'medium', label: 'Medium', labelKo: '보통', hint: '9-13' },
+  { value: 'long',   label: 'Long',   labelKo: '길게', hint: '14+' },
 ]
+
 function filterByLength(names: string[], f: LengthFilter): string[] {
-  if (f === 'any') return names
+  if (f === 'any')    return names
   if (f === 'short')  return names.filter(n => n.length <= 8)
   if (f === 'medium') return names.filter(n => n.length >= 9 && n.length <= 13)
   return names.filter(n => n.length >= 14)
@@ -39,12 +35,10 @@ export default function IdGeneratorPage() {
   const { lang } = useLang()
   const isKo = lang === 'ko'
 
-  const [name, setName]       = useState('')
-  const [hobbies, setHobbies] = useState('')
-  const [numbers, setNumbers] = useState('')
-  const [style, setStyle]     = useState<Style>('any')
-  const [useSep, setUseSep]       = useState(true)
-  const [sep, setSep]             = useState<Separator>('-')
+  const [name, setName]           = useState('')
+  const [hobbies, setHobbies]     = useState('')
+  const [numbers, setNumbers]     = useState('')
+  const [style, setStyle]         = useState<Style>('any')
   const [lengthFilter, setLength] = useState<LengthFilter>('any')
   const [cards, setCards]         = useState<Card[]>([])
   const [mode, setMode]           = useState<'username' | 'uuid'>('username')
@@ -54,12 +48,14 @@ export default function IdGeneratorPage() {
       setCards(Array.from({ length: 30 }, () => ({ id: ++uid, value: generateUUID(), copied: false })))
       return
     }
-    // Short 선택 시 구분자 제거 + 숫자 제외, 후보 많이 생성
-    const effectiveSep = (lengthFilter === 'short') ? '' : (useSep ? sep : '')
-    const effectiveNumbers = (lengthFilter === 'short') ? '' : numbers
-    const batchSize = lengthFilter === 'short' ? 300 : 120
-    const pool = generateUsernames({ name, hobbies, numbers: effectiveNumbers, style, separator: effectiveSep }, batchSize)
-    const filtered = filterByLength(pool, lengthFilter).slice(0, 30)
+    const isShort = lengthFilter === 'short'
+    const batch = generateUsernames({
+      name, hobbies,
+      numbers: isShort ? '' : numbers,
+      style,
+      shortOnly: isShort,
+    }, isShort ? 500 : 120)
+    const filtered = filterByLength(batch, lengthFilter).slice(0, 30)
     setCards(filtered.map(v => ({ id: ++uid, value: v, copied: false })))
   }
 
@@ -116,15 +112,16 @@ export default function IdGeneratorPage() {
             </div>
           </div>
 
-          {/* Numbers + style + separator */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Numbers + style */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-xs text-slate-500 uppercase tracking-wider mb-1.5 block">
                 {isKo ? '좋아하는 숫자' : 'Favourite numbers'}
               </label>
               <input value={numbers} onChange={e => setNumbers(e.target.value)}
                 placeholder={isKo ? '예: 7, 99' : 'e.g. 7, 99'}
-                className="w-full bg-slate-800 border border-slate-700 focus:border-cyan-500/60 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-600 outline-none transition-colors" />
+                disabled={lengthFilter === 'short'}
+                className="w-full bg-slate-800 border border-slate-700 focus:border-cyan-500/60 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-600 outline-none transition-colors disabled:opacity-40" />
             </div>
             <div>
               <label className="text-xs text-slate-500 uppercase tracking-wider mb-1.5 block">
@@ -139,28 +136,9 @@ export default function IdGeneratorPage() {
                 ))}
               </div>
             </div>
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs text-slate-500 uppercase tracking-wider">
-                  {isKo ? '구분자' : 'Separator'}
-                </label>
-                <button onClick={() => setUseSep(p => !p)}
-                  className={`w-9 h-5 rounded-full transition-colors relative ${useSep ? 'bg-cyan-500' : 'bg-slate-700'}`}>
-                  <span className={`absolute top-[3px] w-[14px] h-[14px] bg-white rounded-full shadow transition-transform ${useSep ? 'translate-x-[19px]' : 'translate-x-[3px]'}`} />
-                </button>
-              </div>
-              <div className={`flex gap-1.5 transition-opacity ${useSep ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
-                {SEPARATORS.map(s => (
-                  <button key={s.value} onClick={() => setSep(s.value)}
-                    className={`flex-1 py-1.5 rounded-lg text-xs font-mono border transition-all ${sep === s.value && useSep ? 'bg-slate-600 border-slate-500 text-white' : 'border-slate-700 text-slate-500 hover:border-slate-600 hover:text-slate-300'}`}>
-                    {s.label}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* Length filter */}
+          {/* Length */}
           <div>
             <label className="text-xs text-slate-500 uppercase tracking-wider mb-1.5 block">
               {isKo ? '아이디 길이' : 'Length'}
@@ -205,7 +183,6 @@ export default function IdGeneratorPage() {
         </>
       )}
 
-      {/* Empty state */}
       {cards.length === 0 && (
         <div className="text-center py-20 text-slate-700">
           <p className="text-5xl mb-4">🎲</p>

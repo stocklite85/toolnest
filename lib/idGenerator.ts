@@ -1,5 +1,4 @@
 export type Style = 'any' | 'cool' | 'cute' | 'funny' | 'tech'
-export type Separator = '' | '-' | '_'
 
 const pool: Record<Exclude<Style, 'any'>, { adj: string[]; noun: string[] }> = {
   cool: {
@@ -25,8 +24,7 @@ function randInt(min: number, max: number) { return Math.floor(Math.random() * (
 
 function pickStyle(style: Style): Exclude<Style, 'any'> {
   if (style !== 'any') return style
-  const styles: Exclude<Style, 'any'>[] = ['cool', 'cute', 'funny', 'tech']
-  return rand(styles)
+  return rand(['cool', 'cute', 'funny', 'tech'] as const)
 }
 
 export interface GenOptions {
@@ -34,7 +32,7 @@ export interface GenOptions {
   hobbies: string
   numbers: string
   style: Style
-  separator: Separator
+  shortOnly: boolean
 }
 
 function cleanWord(s: string): string {
@@ -53,34 +51,41 @@ function getHobbyWords(hobbies: string): string[] {
 }
 
 export function generateUsernames(opts: GenOptions, count: number): string[] {
-  const { name, hobbies, numbers, style, separator } = opts
-  const sep = separator
+  const { name, hobbies, numbers, style, shortOnly } = opts
   const nameWord = cleanWord(name)
   const hobbyWords = getHobbyWords(hobbies)
-  const nums = getNumbers(numbers)
+  const nums = shortOnly ? [''] : getNumbers(numbers)
   const results = new Set<string>()
 
-  const add = (parts: (string | undefined)[], num = '') => {
-    const joined = parts.filter(Boolean).join(sep) + num
+  const add = (parts: string[], num = '') => {
+    const joined = parts.filter(Boolean).join('') + num
     if (joined.length >= 3) results.add(joined)
   }
 
   let attempts = 0
-  while (results.size < count && attempts < count * 10) {
+  while (results.size < count && attempts < count * 20) {
     attempts++
     const s = pickStyle(style)
-    const { adj, noun } = pool[s]
+    let { adj, noun } = pool[s]
+
+    // Short 모드: 4자 이하 단어만 사용
+    if (shortOnly) {
+      adj = adj.filter(w => w.length <= 4)
+      noun = noun.filter(w => w.length <= 4)
+      if (!adj.length || !noun.length) continue
+    }
+
     const a = rand(adj)
     const n = rand(noun)
-    const num = rand(nums) ? `${sep}${rand(nums)}` : ''
-    const hobby = hobbyWords.length ? rand(hobbyWords) : ''
+    const num = shortOnly ? '' : (rand(nums) ? `${rand(nums)}` : '')
 
-    // Generation patterns
+    const hobby = hobbyWords.length ? rand(hobbyWords) : ''
     const pattern = randInt(0, nameWord ? 7 : 4)
+
     switch (pattern) {
       case 0: add([a, n], num); break
       case 1: add([a, n]); break
-      case 2: add([a, n], `${sep}${randInt(1, 999)}`); break
+      case 2: add([a, n], `${randInt(1, 999)}`); break
       case 3: add([n, a], num); break
       case 4: add([a, n, `${randInt(10, 99)}`]); break
       case 5: add([nameWord, n], num); break
@@ -88,7 +93,7 @@ export function generateUsernames(opts: GenOptions, count: number): string[] {
       case 7: add([nameWord, hobby || n], num); break
     }
 
-    if (hobby) {
+    if (hobby && !shortOnly) {
       const p2 = randInt(0, 2)
       if (p2 === 0) add([hobby, n], num)
       else if (p2 === 1) add([a, hobby], num)
