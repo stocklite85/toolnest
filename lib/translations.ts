@@ -7,7 +7,7 @@ export const translations = {
       subnet: 'Subnet',
     },
     home: {
-      subtitle: 'Simple, free online utilities for developers and everyone.',
+      subtitle: 'Fast, simple, and free online tools.',
       toolsTitle: 'All Tools',
     },
     password: {
@@ -109,7 +109,7 @@ export const translations = {
       subnet: '서브넷',
     },
     home: {
-      subtitle: '개발자와 모든 분들을 위한 무료 온라인 유틸리티.',
+      subtitle: '빠르고 간단한 무료 온라인 도구 모음',
       toolsTitle: '전체 도구',
     },
     password: {
