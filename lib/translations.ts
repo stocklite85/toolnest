@@ -98,7 +98,7 @@ export const translations = {
     },
     common: {
       backHome: '← Back to Home',
-      footerText: 'Free online utilities. No tracking, no ads (yet), no nonsense.',
+      footerText: 'Free forever · Runs in your browser · No data collection',
     },
   },
   ko: {
@@ -200,7 +200,7 @@ export const translations = {
     },
     common: {
       backHome: '← 홈으로',
-      footerText: '무료 온라인 유틸리티. 트래킹 없음, 광고 없음, 복잡함 없음.',
+      footerText: '모든 도구 무료 · 브라우저에서만 처리 · 데이터 수집 없음',
     },
   },
 }
