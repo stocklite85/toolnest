@@ -68,6 +68,14 @@ const tools = [
     color: 'from-pink-500/10 to-rose-500/10 hover:from-pink-500/20 hover:to-rose-500/20 border-pink-500/20 hover:border-pink-500/50',
     iconBg: 'bg-pink-500/20',
   },
+  {
+    href: '/lotto-generator',
+    icon: '🎰',
+    titleKey: 'lottoGenerator.title',
+    descKey: 'lottoGenerator.description',
+    color: 'from-yellow-500/10 to-amber-500/10 hover:from-yellow-500/20 hover:to-amber-500/20 border-yellow-500/20 hover:border-yellow-500/50',
+    iconBg: 'bg-yellow-500/20',
+  },
 ]
 
 export default function Home() {

@@ -31,7 +31,7 @@ toolnest/
 ├── app/
 │   ├── globals.css                      ✅ 완성
 │   ├── layout.tsx                       ✅ 완성 (루트 레이아웃, SEO 메타, Google/Naver 인증 태그)
-│   ├── page.tsx                         ✅ 완성 (홈 — 툴 카드 8개)
+│   ├── page.tsx                         ✅ 완성 (홈 — 툴 카드 9개)
 │   ├── sitemap.ts                       ✅ 완성 (/sitemap.xml 자동 생성)
 │   ├── robots.ts                        ✅ 완성 (/robots.txt 자동 생성)
 │   ├── password-generator/
@@ -46,6 +46,9 @@ toolnest/
 │   ├── nickname-generator/
 │   │   ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
 │   │   └── page.tsx                     ✅ 완성 (스타일/언어/글자수/개수 선택)
+│   ├── lotto-generator/
+│   │   ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
+│   │   └── page.tsx                     ✅ 완성 (6/45 컬러 볼, 1/5/10게임)
 │   └── privacy/
 │       ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
 │       └── page.tsx                     ✅ 완성 (개인정보 처리방침 전문, 한/영)
@@ -63,7 +66,8 @@ toolnest/
 │   ├── password.ts                      ✅ 완성 (생성 로직 + 강도 측정)
 │   ├── idGenerator.ts                   ✅ 완성 (스타일별 단어풀 + 길이 필터 + UUID)
 │   ├── subnet.ts                        ✅ 완성 (CIDR 파싱 + 전체 계산)
-│   └── nicknameGenerator.ts             ✅ 완성 (스타일별 한/영 단어풀, 글자수 필터)
+│   ├── nicknameGenerator.ts             ✅ 완성 (스타일별 한/영 단어풀, 글자수 필터)
+│   └── lottoGenerator.ts                ✅ 완성 (6/45 랜덤 추첨, 볼 색상 범위)
 ├── next.config.ts                       ✅ 기본값 유지 (standalone 넣지 말 것)
 └── HANDOFF.md                           ← 이 파일
 ```
@@ -96,6 +100,25 @@ toolnest/
 - 출력: 네트워크 주소, 브로드캐스트, 서브넷/와일드카드 마스크, 첫/마지막 호스트, 전체/사용가능 호스트 수, IP 클래스, 사설IP 여부, 바이너리 마스크
 - `/31`, `/32` 엣지 케이스 처리됨
 
+### 4. Base64 인코더/디코더 (`/base64`)
+- 텍스트 → Base64 인코딩, Base64 → 텍스트 디코딩
+- UTF-8 안전 처리 (`TextEncoder` / `TextDecoder` 사용)
+- 클립보드 복사 버튼
+
+### 5. JSON 포매터 (`/json-formatter`)
+- JSON 예쁘게 정렬 (`JSON.stringify(JSON.parse(input), null, 2)`)
+- JSON 압축(minify)
+- 유효성 오류 메시지 표시
+
+### 6. URL 인코더/디코더 (`/url-encoder`)
+- `encodeURIComponent` / `decodeURIComponent` 방식
+- 클립보드 복사 버튼
+
+### 7. 색상 변환기 (`/color-converter`)
+- HEX → RGB → HSL 상호 변환
+- 색상 피커(input[type=color]) 연동
+- HEX / RGB / HSL / CSS 변수 4가지 출력 카드
+
 ### 8. 닉네임 생성기 (`/nickname-generator`)
 - **스타일:** 전체 / 웃김 / 판타지 / 무협 / 캐릭터 / 일반 / 컨셉
 - **언어:** 한글 / 영어 소문자 / 영어 대문자 / 혼합
@@ -103,6 +126,13 @@ toolnest/
 - **생성 개수:** 5 / 10 / 20 / 30개
 - 카드 클릭 복사, 전체 복사 버튼
 - `lib/nicknameGenerator.ts`: `NickStyle`, `NickLang` 타입, 스타일별 한/영 단어풀, `generateNicknames()` 함수
+
+### 9. 로또 번호 생성기 (`/lotto-generator`)
+- 로또 6/45 기준: 1~45에서 6개 랜덤 추첨, 오름차순 정렬
+- **게임 수:** 1 / 5 / 10게임
+- 번호별 컬러 볼: 1-10 노랑, 11-20 파랑, 21-30 빨강, 31-40 회색, 41-45 초록
+- 게임별 개별 복사, 전체 복사
+- `lib/lottoGenerator.ts`: `generateLottoNumbers()`, `getBallStyle(n)` 함수
 
 ---
 
@@ -144,6 +174,7 @@ toolnest/
 - [x] URL 인코더/디코더 (`/url-encoder`)
 - [x] 색상 변환기 (`/color-converter`)
 - [x] 닉네임 생성기 (`/nickname-generator`)
+- [x] 로또 번호 생성기 (`/lotto-generator`)
 
 ---
 

@@ -92,6 +92,10 @@ export const translations = {
       title: 'Nickname Generator',
       description: 'Generate unique nicknames by style and language',
     },
+    lottoGenerator: {
+      title: 'Lotto Number Generator',
+      description: 'Generate random Lotto 6/45 numbers instantly',
+    },
     common: {
       backHome: '← Back to Home',
       footerText: 'Free online utilities. No tracking, no ads (yet), no nonsense.',
@@ -189,6 +193,10 @@ export const translations = {
     nicknameGenerator: {
       title: '닉네임 생성기',
       description: '스타일과 언어를 선택해 나만의 닉네임을 생성하세요',
+    },
+    lottoGenerator: {
+      title: '로또 번호 생성기',
+      description: '로또 6/45 번호를 무작위로 즉시 생성하세요',
     },
     common: {
       backHome: '← 홈으로',
