@@ -31,7 +31,7 @@ toolnest/
 ├── app/
 │   ├── globals.css                      ✅ 완성
 │   ├── layout.tsx                       ✅ 완성 (루트 레이아웃, SEO 메타, Google/Naver 인증 태그)
-│   ├── page.tsx                         ✅ 완성 (홈 — 툴 카드 3개)
+│   ├── page.tsx                         ✅ 완성 (홈 — 툴 카드 8개)
 │   ├── sitemap.ts                       ✅ 완성 (/sitemap.xml 자동 생성)
 │   ├── robots.ts                        ✅ 완성 (/robots.txt 자동 생성)
 │   ├── password-generator/
@@ -43,6 +43,9 @@ toolnest/
 │   ├── subnet-calculator/
 │   │   ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
 │   │   └── page.tsx                     ✅ 완성
+│   ├── nickname-generator/
+│   │   ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
+│   │   └── page.tsx                     ✅ 완성 (스타일/언어/글자수/개수 선택)
 │   └── privacy/
 │       ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
 │       └── page.tsx                     ✅ 완성 (개인정보 처리방침 전문, 한/영)
@@ -59,7 +62,8 @@ toolnest/
 │   ├── translations.ts                  ✅ 완성 (한/영 전체 번역 텍스트)
 │   ├── password.ts                      ✅ 완성 (생성 로직 + 강도 측정)
 │   ├── idGenerator.ts                   ✅ 완성 (스타일별 단어풀 + 길이 필터 + UUID)
-│   └── subnet.ts                        ✅ 완성 (CIDR 파싱 + 전체 계산)
+│   ├── subnet.ts                        ✅ 완성 (CIDR 파싱 + 전체 계산)
+│   └── nicknameGenerator.ts             ✅ 완성 (스타일별 한/영 단어풀, 글자수 필터)
 ├── next.config.ts                       ✅ 기본값 유지 (standalone 넣지 말 것)
 └── HANDOFF.md                           ← 이 파일
 ```
@@ -91,6 +95,14 @@ toolnest/
 - 빠른 예시 버튼 4개, 엔터키로 계산 가능
 - 출력: 네트워크 주소, 브로드캐스트, 서브넷/와일드카드 마스크, 첫/마지막 호스트, 전체/사용가능 호스트 수, IP 클래스, 사설IP 여부, 바이너리 마스크
 - `/31`, `/32` 엣지 케이스 처리됨
+
+### 8. 닉네임 생성기 (`/nickname-generator`)
+- **스타일:** 전체 / 웃김 / 판타지 / 무협 / 캐릭터 / 일반 / 컨셉
+- **언어:** 한글 / 영어 소문자 / 영어 대문자 / 혼합
+- **글자 수:** 제한없음 / 2 / 3 / 4 / 5 / 6자
+- **생성 개수:** 5 / 10 / 20 / 30개
+- 카드 클릭 복사, 전체 복사 버튼
+- `lib/nicknameGenerator.ts`: `NickStyle`, `NickLang` 타입, 스타일별 한/영 단어풀, `generateNicknames()` 함수
 
 ---
 
@@ -131,6 +143,7 @@ toolnest/
 - [x] JSON 포매터 (`/json-formatter`)
 - [x] URL 인코더/디코더 (`/url-encoder`)
 - [x] 색상 변환기 (`/color-converter`)
+- [x] 닉네임 생성기 (`/nickname-generator`)
 
 ---
 

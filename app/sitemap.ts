@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/json-formatter`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/url-encoder`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/color-converter`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/nickname-generator`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
   ]
 }

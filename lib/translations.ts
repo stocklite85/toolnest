@@ -88,6 +88,10 @@ export const translations = {
       title: 'Color Converter',
       description: 'Convert colors between HEX, RGB, and HSL',
     },
+    nicknameGenerator: {
+      title: 'Nickname Generator',
+      description: 'Generate unique nicknames by style and language',
+    },
     common: {
       backHome: '← Back to Home',
       footerText: 'Free online utilities. No tracking, no ads (yet), no nonsense.',
@@ -181,6 +185,10 @@ export const translations = {
     colorConverter: {
       title: '색상 변환기',
       description: 'HEX, RGB, HSL 색상 코드를 변환하세요',
+    },
+    nicknameGenerator: {
+      title: '닉네임 생성기',
+      description: '스타일과 언어를 선택해 나만의 닉네임을 생성하세요',
     },
     common: {
       backHome: '← 홈으로',

@@ -15,7 +15,8 @@ const moreLinks = [
   { href: '/base64',          labelKo: 'Base64 인코더',  labelEn: 'Base64' },
   { href: '/json-formatter',  labelKo: 'JSON 포매터',    labelEn: 'JSON Formatter' },
   { href: '/url-encoder',     labelKo: 'URL 인코더',     labelEn: 'URL Encoder' },
-  { href: '/color-converter', labelKo: '색상 변환기',    labelEn: 'Color Converter' },
+  { href: '/color-converter',      labelKo: '색상 변환기',    labelEn: 'Color Converter' },
+  { href: '/nickname-generator',   labelKo: '닉네임 생성기', labelEn: 'Nickname Generator' },
 ]
 
 export default function Header() {

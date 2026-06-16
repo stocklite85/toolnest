@@ -60,6 +60,14 @@ const tools = [
     color: 'from-violet-500/10 to-fuchsia-500/10 hover:from-violet-500/20 hover:to-fuchsia-500/20 border-violet-500/20 hover:border-violet-500/50',
     iconBg: 'bg-violet-500/20',
   },
+  {
+    href: '/nickname-generator',
+    icon: '✨',
+    titleKey: 'nicknameGenerator.title',
+    descKey: 'nicknameGenerator.description',
+    color: 'from-pink-500/10 to-rose-500/10 hover:from-pink-500/20 hover:to-rose-500/20 border-pink-500/20 hover:border-pink-500/50',
+    iconBg: 'bg-pink-500/20',
+  },
 ]
 
 export default function Home() {
