@@ -96,6 +96,10 @@ export const translations = {
       title: 'Lotto Number Generator',
       description: 'Generate random Lotto 6/45 numbers instantly',
     },
+    spinWheel: {
+      title: 'Spin the Wheel',
+      description: 'Add names and spin the wheel to pick a random winner',
+    },
     common: {
       backHome: '← Back to Home',
       footerText: 'Free forever · Runs in your browser · No data collection',
@@ -197,6 +201,10 @@ export const translations = {
     lottoGenerator: {
       title: '로또 번호 생성기',
       description: '로또 6/45 번호를 무작위로 즉시 생성하세요',
+    },
+    spinWheel: {
+      title: '이름 추첨기',
+      description: '참가자를 입력하고 룰렛을 돌려 당첨자를 뽑으세요',
     },
     common: {
       backHome: '← 홈으로',

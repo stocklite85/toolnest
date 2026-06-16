@@ -31,7 +31,7 @@ toolnest/
 ├── app/
 │   ├── globals.css                      ✅ 완성
 │   ├── layout.tsx                       ✅ 완성 (루트 레이아웃, SEO 메타, Google/Naver 인증 태그)
-│   ├── page.tsx                         ✅ 완성 (홈 — 툴 카드 9개)
+│   ├── page.tsx                         ✅ 완성 (홈 — 툴 카드 10개)
 │   ├── sitemap.ts                       ✅ 완성 (/sitemap.xml 자동 생성)
 │   ├── robots.ts                        ✅ 완성 (/robots.txt 자동 생성)
 │   ├── password-generator/
@@ -49,6 +49,9 @@ toolnest/
 │   ├── lotto-generator/
 │   │   ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
 │   │   └── page.tsx                     ✅ 완성 (6/45 컬러 볼, 1/5/10게임)
+│   ├── spin-wheel/
+│   │   ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
+│   │   └── page.tsx                     ✅ 완성 (Canvas 룰렛, 최대 20명)
 │   └── privacy/
 │       ├── layout.tsx                   ✅ 완성 (SEO 메타데이터)
 │       └── page.tsx                     ✅ 완성 (개인정보 처리방침 전문, 한/영)
@@ -134,6 +137,13 @@ toolnest/
 - 게임별 개별 복사, 전체 복사
 - `lib/lottoGenerator.ts`: `generateLottoNumbers()`, `getBallStyle(n)` 함수
 
+### 10. 이름 추첨기 룰렛 (`/spin-wheel`)
+- 로또 6/45 기준: 1~45에서 6개 랜덤 추첨, 오름차순 정렬
+- **게임 수:** 1 / 5 / 10게임
+- 번호별 컬러 볼: 1-10 노랑, 11-20 파랑, 21-30 빨강, 31-40 회색, 41-45 초록
+- 게임별 개별 복사, 전체 복사
+- `lib/lottoGenerator.ts`: `generateLottoNumbers()`, `getBallStyle(n)` 함수
+
 ---
 
 ## 언어 시스템
@@ -175,6 +185,7 @@ toolnest/
 - [x] 색상 변환기 (`/color-converter`)
 - [x] 닉네임 생성기 (`/nickname-generator`)
 - [x] 로또 번호 생성기 (`/lotto-generator`)
+- [x] 이름 추첨기 룰렛 (`/spin-wheel`)
 
 ---
 

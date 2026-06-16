@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/color-converter`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/nickname-generator`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/lotto-generator`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/spin-wheel`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
   ]
 }

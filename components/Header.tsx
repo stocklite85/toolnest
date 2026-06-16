@@ -18,6 +18,7 @@ const moreLinks = [
   { href: '/color-converter',      labelKo: '색상 변환기',    labelEn: 'Color Converter' },
   { href: '/nickname-generator',   labelKo: '닉네임 생성기', labelEn: 'Nickname Generator' },
   { href: '/lotto-generator',      labelKo: '로또 번호 생성기', labelEn: 'Lotto Generator' },
+  { href: '/spin-wheel',           labelKo: '이름 추첨기',      labelEn: 'Spin the Wheel' },
 ]
 
 export default function Header() {

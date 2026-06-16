@@ -76,6 +76,14 @@ const tools = [
     color: 'from-yellow-500/10 to-amber-500/10 hover:from-yellow-500/20 hover:to-amber-500/20 border-yellow-500/20 hover:border-yellow-500/50',
     iconBg: 'bg-yellow-500/20',
   },
+  {
+    href: '/spin-wheel',
+    icon: '🎡',
+    titleKey: 'spinWheel.title',
+    descKey: 'spinWheel.description',
+    color: 'from-rose-500/10 to-orange-500/10 hover:from-rose-500/20 hover:to-orange-500/20 border-rose-500/20 hover:border-rose-500/50',
+    iconBg: 'bg-rose-500/20',
+  },
 ]
 
 export default function Home() {
