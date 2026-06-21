@@ -61,7 +61,8 @@ toolnest/
 │   ├── CopyButton.tsx                   ✅ 완성 (복사 후 2초 피드백)
 │   ├── PrivacyBadge.tsx                 ✅ 완성 (각 툴 페이지 상단 — 브라우저 처리 안내 배너)
 │   ├── AdSlot.tsx                       ✅ 완성 (Google AdSense 광고 슬롯 컴포넌트)
-│   └── BottomNav.tsx                    ✅ 완성 (모바일 하단 네비게이션, md 이상 숨김)
+│   ├── BottomNav.tsx                    ✅ 완성 (모바일 하단 네비게이션, md 이상 숨김)
+│   └── CookieBanner.tsx                 ✅ 완성 (쿠키 동의 배너, 하단 고정)
 ├── contexts/
 │   └── LangContext.tsx                  ✅ 완성 (브라우저 언어 자동 감지 + localStorage 저장)
 ├── lib/
@@ -173,6 +174,9 @@ toolnest/
 ### 수익화
 - [x] `components/AdSlot.tsx` 완성 (publisher ID: `ca-pub-5163207360443663`)
 - [x] `app/layout.tsx`에 AdSense 글로벌 스크립트 추가
+- [x] `public/ads.txt` 생성
+- [x] `google-adsense-account` 메타태그 추가
+- [x] 쿠키 동의 배너 (`components/CookieBanner.tsx`) 추가
 - [ ] **AdSense 심사 승인 대기** — 승인 후 각 페이지에 `<AdSlot slot="광고슬롯ID" />` 배치
   - 광고 슬롯 ID는 AdSense 대시보드 → 광고 → 광고 단위에서 생성
 
