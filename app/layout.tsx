@@ -7,6 +7,7 @@ import { LangProvider } from '@/contexts/LangContext'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import BottomNav from '@/components/BottomNav'
+import CookieBanner from '@/components/CookieBanner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-1 pb-16 md:pb-0">{children}</main>
           <Footer />
           <BottomNav />
+          <CookieBanner />
         </LangProvider>
         <Script
           async
