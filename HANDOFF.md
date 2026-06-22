@@ -166,6 +166,7 @@ toolnest/
 | 네이버 서치어드바이저 | ✅ 소유권 인증 완료, 사이트맵 제출 완료 (색인 반영 대기 중) |
 | Google 인증 키 | `gFJC8pKAliNeLONrdUMXGG5PsKABSFIcGr6DLkmz6KY` |
 | 네이버 인증 키 | `959ce7ee9fb420f2d0bc22eb3b69c56c44a4eaf9` |
+| Google Analytics 4 | ✅ 적용 완료 (`G-SFMVPKL82C`, 쿠키 동의 후 로드) |
 
 ---
 

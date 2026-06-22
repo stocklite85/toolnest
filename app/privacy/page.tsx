@@ -15,7 +15,7 @@ export default function PrivacyPage() {
       <div className="mt-8 mb-10">
         <div className="w-10 h-10 bg-indigo-500/20 rounded-xl flex items-center justify-center text-xl mb-4">🔒</div>
         <h1 className="text-3xl font-bold mb-2">{isKo ? '개인정보 처리방침' : 'Privacy Policy'}</h1>
-        <p className="text-slate-500 text-sm">{isKo ? '최종 업데이트: 2025년 6월' : 'Last updated: June 2025'}</p>
+        <p className="text-slate-500 text-sm">{isKo ? '최종 업데이트: 2026년 6월 22일' : 'Last updated: June 22, 2026'}</p>
       </div>
 
       <div className="space-y-8 text-slate-300 leading-relaxed">
@@ -76,8 +76,8 @@ export default function PrivacyPage() {
           </h2>
           <p>
             {isKo
-              ? '현재 ToolNest는 쿠키, 로컬 스토리지, 세션 스토리지를 통해 어떠한 사용자 데이터도 저장하지 않습니다. 향후 Google Analytics 또는 광고 서비스가 추가될 경우 본 방침을 업데이트하고 명시적으로 안내드리겠습니다.'
-              : 'ToolNest currently does not store any user data via cookies, localStorage, or sessionStorage. If Google Analytics or advertising services are added in the future, this policy will be updated with explicit notice.'}
+              ? 'ToolNest는 언어 설정과 쿠키 동의 선택을 로컬 스토리지에 저장합니다. 동의한 경우에만 Google Analytics와 AdSense가 이용 통계 및 광고 제공을 위한 쿠키를 사용할 수 있습니다.'
+              : 'ToolNest stores your language preference and cookie-consent choice in localStorage. Only after you consent, Google Analytics and AdSense may use cookies for traffic measurement and ad delivery.'}
           </p>
         </section>
 
@@ -87,8 +87,8 @@ export default function PrivacyPage() {
           </h2>
           <p>
             {isKo
-              ? '현재 사이트는 Vercel을 통해 호스팅됩니다. Vercel은 서버 접근 로그(IP 주소, 요청 경로 등)를 수집할 수 있으며, 이는 Vercel의 개인정보 처리방침을 따릅니다. ToolNest 자체는 이 데이터에 접근하거나 활용하지 않습니다.'
-              : 'This site is hosted via Vercel. Vercel may collect server access logs (IP address, request path, etc.) subject to their own privacy policy. ToolNest itself does not access or use this data.'}
+              ? '사이트는 Vercel을 통해 호스팅되며, 동의한 경우 Google Analytics와 Google AdSense를 사용합니다. 각 서비스는 자체 개인정보 처리방침에 따라 접속 정보와 이용 데이터를 처리할 수 있습니다. 도구에 입력한 내용은 이들 서비스로 전송하지 않습니다.'
+              : 'This site is hosted by Vercel and, with your consent, uses Google Analytics and Google AdSense. These services may process access and usage data under their own privacy policies. Data entered into the tools is not sent to these services.'}
           </p>
         </section>
 

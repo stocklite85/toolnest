@@ -8,6 +8,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import BottomNav from '@/components/BottomNav'
 import CookieBanner from '@/components/CookieBanner'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -40,6 +41,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5163207360443663"
           crossOrigin="anonymous"
           strategy="afterInteractive"
+        />
+        <GoogleAnalytics
+          measurementId="G-SFMVPKL82C"
+          storageKey="toolnest-cookie-consent"
         />
         <Analytics />
       </body>

@@ -16,11 +16,13 @@ export default function CookieBanner() {
 
   const accept = () => {
     localStorage.setItem(STORAGE_KEY, 'accepted');
+    window.dispatchEvent(new Event('cookie-consent-change'));
     setVisible(false);
   };
 
   const decline = () => {
     localStorage.setItem(STORAGE_KEY, 'declined');
+    window.dispatchEvent(new Event('cookie-consent-change'));
     setVisible(false);
   };
 
@@ -31,9 +33,9 @@ export default function CookieBanner() {
       <div className="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
         <p className="flex-1 text-sm text-slate-300 leading-relaxed">
           {lang === 'ko'
-            ? <>이 사이트는 광고 서비스 제공을 위해 Google AdSense 쿠키를 사용합니다. 자세한 내용은{' '}
+            ? <>이 사이트는 방문 통계와 광고 서비스 제공을 위해 Google Analytics 및 AdSense 쿠키를 사용합니다. 자세한 내용은{' '}
                 <Link href="/privacy" className="underline text-blue-400 hover:text-blue-300">개인정보 처리방침</Link>을 참고하세요.</>
-            : <>This site uses Google AdSense cookies to serve ads. See our{' '}
+            : <>This site uses Google Analytics and AdSense cookies for traffic measurement and ads. See our{' '}
                 <Link href="/privacy" className="underline text-blue-400 hover:text-blue-300">Privacy Policy</Link> for details.</>
           }
         </p>
